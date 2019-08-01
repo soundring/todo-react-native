@@ -1,30 +1,40 @@
-import React,{useState} from 'react';
-import { StyleSheet, Text, View, TextInput,Button } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
 // 次にやること
 // 文字入力の値を取得する
 // ボタンでその入力をアラート表示する
 
 export default function App() {
-   const [text, setText] = useState("なし")
-   const [todo,setTodo] = useState("無し")
+  const [text, setText] = useState('文字を入力してください');
+  const [todos, setTodos] = useState([]);
   return (
     <View style={styles.container}>
       <TextInput
         defaultValue={text}
-        onChangeText={(e) =>{
-            alert("入力された値",e,"Todoになるテキスト",text)
+        onChangeText={inputText => {
+          setText(inputText);
         }}
-        style={{ width: 200, height: 44, padding: 8 ,backgroundColor: "red"}}
+        style={{
+          width: 200,
+          height: 44,
+          padding: 8,
+          backgroundColor: 'black',
+          color: 'white'
+        }}
       />
       <Button
-      onPress={()=> {
-        setTodo("変更されたTODO")
-      }}
-      title="タスクを追加"
-      color="#841584"
-       />
-
-      <Text>{todo}</Text>
+        onPress={() => {
+          setTodos(todos.concat(text));
+          setText('');
+        }}
+        title="タスクを追加"
+        color="#841584"
+      />
+      {todos.map((todo, index) => (
+        <Text>
+          {index + 1}:{todo}
+        </Text>
+      ))}
     </View>
   );
 }
